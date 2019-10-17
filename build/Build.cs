@@ -35,7 +35,6 @@ class Build : NukeBuild
     AbsolutePath OutputDirectory => RootDirectory / "output";
 
     Target Clean => _ => _
-        .Before(Restore)
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
@@ -44,6 +43,7 @@ class Build : NukeBuild
         });
 
     Target Restore => _ => _
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
@@ -69,6 +69,19 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .EnableNoBuild()
                 .EnableNoRestore()
+                .EnableLogOutput());
+        });
+
+    Target Publish => _ => _
+        .DependsOn(Test)
+        .Executes(() =>
+        {
+            var project = Solution.GetProject("FinHub");
+            DotNetPublish(s => s
+                .SetProject(project)
+                .SetConfiguration(Configuration)
+                .SetFramework(project.GetTargetFrameworks().FirstOrDefault())
+                .SetOutput(OutputDirectory)
                 .EnableLogOutput());
         });
 }
