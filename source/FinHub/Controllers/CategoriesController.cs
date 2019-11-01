@@ -1,5 +1,4 @@
 using FinHub.Models.RequestModels;
-using FinHub.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinHub.Controllers
@@ -7,15 +6,12 @@ namespace FinHub.Controllers
     [Route("api/groups/{groupId}/[controller]")]
     public class CategoriesController : CrudController
     {
-        private readonly ITransactionCategoryService m_service;
-
-        public CategoriesController(ITransactionCategoryService service)
+        public CategoriesController()
         {
-            m_service = service;
         }
 
         [HttpPost()]
-        public IActionResult CreateAsync([FromBody]CategoryRequestModel category)
+        public IActionResult CreateAsync()
         {
             return Ok("Created");
         }
@@ -33,7 +29,7 @@ namespace FinHub.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetList([FromQuery]string name = "")
+        public IActionResult GetList()
         {
             return Ok();
         }

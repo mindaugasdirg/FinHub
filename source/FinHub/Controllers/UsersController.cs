@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using FinHub.Models.RequestModels;
+using FinHub.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinHub.Controllers
@@ -5,38 +8,59 @@ namespace FinHub.Controllers
     [Route("api/[controller]")]
     public class UsersController : CrudController
     {
-        public UsersController()
+        private readonly IUserService m_service;
+        public UsersController(IUserService service)
         {
+            m_service = service;
         }
 
         [HttpPost()]
-        public IActionResult CreateAsync()
+        public async Task<IActionResult> CreateAsync([FromBody]UserRequestModel user)
         {
-            return Ok();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await m_service.CreateAsync(user);
+            
+            return HandlePostResult("users", result);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateAsync()
+        public IActionResult UpdateAsync(int id, [FromBody]UserRequestModel user)
         {
-            return Ok();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = m_service.Update(id, user);
+
+            return HandlePutResult(result);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteAsync(int id)
         {
-            return NoContent();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = m_service.Delete(id);
+
+            return HandleDeleteResult(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok();
+            var result = m_service.GetUser(id);
+
+            return HandleGetResult(result, false);
         }
 
         [HttpGet()]
         public IActionResult GetList()
         {
-            return Ok();
+            var result = m_service.GetList();
+
+            return HandleGetResult(result, true);
         }
     }
 }

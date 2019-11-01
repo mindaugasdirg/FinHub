@@ -1,4 +1,3 @@
-using FinHub.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinHub.Controllers
@@ -6,11 +5,8 @@ namespace FinHub.Controllers
     [Route("api/groups/{groupId}/[controller]")]
     public class TransactionsController : CrudController
     {
-        private readonly ITransactionService m_service;
-
-        public TransactionsController(ITransactionService service)
+        public TransactionsController()
         {
-            m_service = service;
         }
 
         [HttpPost()]
