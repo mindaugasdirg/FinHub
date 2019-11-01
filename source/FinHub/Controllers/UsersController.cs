@@ -26,23 +26,23 @@ namespace FinHub.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateAsync(int id, [FromBody]UserRequestModel user)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody]UserRequestModel user)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = m_service.Update(id, user);
+            var result = await m_service.UpdateAsync(id, user);
 
             return HandlePutResult(result);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = m_service.Delete(id);
+            var result = await m_service.DeleteAsync(id);
 
             return HandleDeleteResult(result);
         }
