@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "build", "build\build.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{F7CEEBF0-DB4C-45E9-9344-70B09942B299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinHub", "source\FinHub\FinHub.csproj", "{6D0497BF-910F-4876-BC0A-D2648A359A67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinHub", "source\FinHub\FinHub.csproj", "{6D0497BF-910F-4876-BC0A-D2648A359A67}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{87D9E148-72B9-4309-99CF-FF3790166027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinHub.UnitTests", "tests\FinHub.UnitTests\FinHub.UnitTests.csproj", "{A41FE75E-10B4-4F1A-A9A0-8631EADC7079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinHub.UnitTests", "tests\FinHub.UnitTests\FinHub.UnitTests.csproj", "{A41FE75E-10B4-4F1A-A9A0-8631EADC7079}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,7 +24,15 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Debug|x64.Build.0 = Debug|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Debug|x86.Build.0 = Debug|Any CPU
 		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Release|x64.ActiveCfg = Release|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Release|x64.Build.0 = Release|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{A3824939-5ED9-4949-82D7-495C05C51C7B}.Release|x86.Build.0 = Release|Any CPU
 		{6D0497BF-910F-4876-BC0A-D2648A359A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D0497BF-910F-4876-BC0A-D2648A359A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0497BF-910F-4876-BC0A-D2648A359A67}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -56,5 +64,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6D0497BF-910F-4876-BC0A-D2648A359A67} = {F7CEEBF0-DB4C-45E9-9344-70B09942B299}
 		{A41FE75E-10B4-4F1A-A9A0-8631EADC7079} = {87D9E148-72B9-4309-99CF-FF3790166027}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8225F4BF-F102-42F0-98D7-AECEDFA80DF6}
 	EndGlobalSection
 EndGlobal
