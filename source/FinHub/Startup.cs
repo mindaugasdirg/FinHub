@@ -1,3 +1,5 @@
+using FinHub.Repositories;
+using FinHub.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,9 @@ namespace FinHub
         {
             services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("memory-database"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

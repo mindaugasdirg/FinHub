@@ -48,7 +48,7 @@ namespace FinHub.Services
             var result = await userRepository.Update(user);
 
             if(result is null)
-                return ServiceResult.Error(500, "Erro deleting user");
+                return ServiceResult.Error(500, "Error deleting user");
             return ServiceResult.Success(UserViewModel.FromModel(result));
         }
 
@@ -59,12 +59,31 @@ namespace FinHub.Services
 
         public ServiceResult GetUser(int id)
         {
-            throw new System.NotImplementedException();
+            var user = userRepository.Get(id);
+
+            if(user is null)
+                return ServiceResult.Error(404, "User does not exist");
+            return ServiceResult.Success(UserViewModel.FromModel(user));
         }
 
-        public Task<ServiceResult> UpdateAsync(int id, UserRequestModel user)
+        public async Task<ServiceResult> UpdateAsync(int id, UserRequestModel user)
         {
-            throw new System.NotImplementedException();
+            if(id != user.Id)
+                return ServiceResult.Error(403, "Cannot modify other users");
+
+            var userEntity = userRepository.Get(id);
+
+            if(userEntity is null)
+                return ServiceResult.Error(404, "User not found");
+
+            userEntity.Email = user.Email;
+            userEntity.Username = user.Username;
+
+            var result = await userRepository.Update(userEntity);
+
+            if(result is null)
+                return ServiceResult.Error(500, "Error updating user");
+            return ServiceResult.Success(UserViewModel.FromModel(result));
         }
     }
 }

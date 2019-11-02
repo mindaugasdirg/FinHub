@@ -54,13 +54,5 @@ namespace FinHub.Controllers
 
             return HandleGetResult(result, false);
         }
-
-        [HttpGet()]
-        public IActionResult GetList()
-        {
-            var result = m_service.GetList();
-
-            return HandleGetResult(result, true);
-        }
     }
 }

@@ -13,10 +13,14 @@ namespace FinHub.Controllers
             {
                 case 400:
                     return BadRequest(result.ErrorMessage);
+                case 403:
+                    return BadRequest(result.ErrorMessage);
                 case 404:
                     return BadRequest(result.ErrorMessage);
                 case 409:
                     return Conflict(result.ErrorMessage);
+                case 500:
+                    return StatusCode(500, result.ErrorMessage);
             }
 
             throw new Exception("Unkown error code");
