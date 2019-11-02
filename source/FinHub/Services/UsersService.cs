@@ -7,18 +7,18 @@ using FinHub.Repositories;
 
 namespace FinHub.Services
 {
-    public class UserService : IUserService
+    public class UsersService : IUsersService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUsersRepository UsersRepository;
 
-        public UserService(IUserRepository repository)
+        public UsersService(IUsersRepository repository)
         {
-            userRepository = repository;
+            UsersRepository = repository;
         }
 
         public async Task<ServiceResult> CreateAsync(UserRequestModel user)
         {
-            if(userRepository.GetCount(user.Username) != 0)
+            if(UsersRepository.GetCount(user.Username) != 0)
                 return ServiceResult.Error(400, "User already exists");
 
             var userEntity = new User()
@@ -28,7 +28,7 @@ namespace FinHub.Services
                 Role = Constants.USER_ROLE,
             };
 
-            var result = await userRepository.Create(userEntity);
+            var result = await UsersRepository.Create(userEntity);
 
             if(result is null)
                 return ServiceResult.Error(500, "Error saving to database");
@@ -38,14 +38,14 @@ namespace FinHub.Services
 
         public async Task<ServiceResult> DeleteAsync(int id)
         {
-            var user = userRepository.Get(id);
+            var user = UsersRepository.Get(id);
 
             if(user is null)
                 return ServiceResult.Error(404, "User not found");
 
             user.Deleted = true;
 
-            var result = await userRepository.Update(user);
+            var result = await UsersRepository.Update(user);
 
             if(result is null)
                 return ServiceResult.Error(500, "Error deleting user");
@@ -59,7 +59,7 @@ namespace FinHub.Services
 
         public ServiceResult GetUser(int id)
         {
-            var user = userRepository.Get(id);
+            var user = UsersRepository.Get(id);
 
             if(user is null)
                 return ServiceResult.Error(404, "User does not exist");
@@ -71,7 +71,7 @@ namespace FinHub.Services
             if(id != user.Id)
                 return ServiceResult.Error(403, "Cannot modify other users");
 
-            var userEntity = userRepository.Get(id);
+            var userEntity = UsersRepository.Get(id);
 
             if(userEntity is null)
                 return ServiceResult.Error(404, "User not found");
@@ -79,7 +79,7 @@ namespace FinHub.Services
             userEntity.Email = user.Email;
             userEntity.Username = user.Username;
 
-            var result = await userRepository.Update(userEntity);
+            var result = await UsersRepository.Update(userEntity);
 
             if(result is null)
                 return ServiceResult.Error(500, "Error updating user");

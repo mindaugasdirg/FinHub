@@ -4,7 +4,7 @@ using FinHub.Models.RequestModels;
 
 namespace FinHub.Services
 {
-    public interface IUserService
+    public interface IUsersService
     {
         Task<ServiceResult> CreateAsync(UserRequestModel user);
         Task<ServiceResult> UpdateAsync(int id, UserRequestModel user);

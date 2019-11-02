@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinHub.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly DatabaseContext dbContext;
 
-        public UserRepository(DatabaseContext context)
+        public UsersRepository(DatabaseContext context)
         {
             dbContext = context;
         }

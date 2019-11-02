@@ -4,7 +4,7 @@ using FinHub.Models.EntityModels;
 
 namespace FinHub.Repositories
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task<User> Create(User user);
         Task<User> Update(User user);

@@ -14,12 +14,12 @@ namespace FinHub.UnitTests.Controllers
     public class UsersControllerTests
     {
         private UsersController m_controller;
-        private Mock<IUserService> m_serviceMock;
+        private Mock<IUsersService> m_serviceMock;
 
         [SetUp]
         public void Setup()
         {
-            m_serviceMock = new Mock<IUserService>();
+            m_serviceMock = new Mock<IUsersService>();
             m_controller = new UsersController(m_serviceMock.Object);
         }
 

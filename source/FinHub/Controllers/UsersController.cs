@@ -8,8 +8,8 @@ namespace FinHub.Controllers
     [Route("api/[controller]")]
     public class UsersController : CrudController
     {
-        private readonly IUserService m_service;
-        public UsersController(IUserService service)
+        private readonly IUsersService m_service;
+        public UsersController(IUsersService service)
         {
             m_service = service;
         }
