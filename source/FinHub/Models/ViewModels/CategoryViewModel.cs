@@ -2,7 +2,7 @@ using FinHub.Models.EntityModels;
 
 namespace FinHub.Models.ViewModels
 {
-    public class CategoryViewModel : IViewModel
+    public class CategoryViewModel : IViewModel<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,7 +11,7 @@ namespace FinHub.Models.ViewModels
 
         public static CategoryViewModel FromModel(Category category)
         {
-            return new CategoryViewModel()
+            return category is null ? null : new CategoryViewModel()
             {
                 Id = category.Id,
                 Name = category.Name,

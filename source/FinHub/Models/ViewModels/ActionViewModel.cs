@@ -2,7 +2,7 @@ using FinHub.Models.EntityModels;
 
 namespace FinHub.Models.ViewModels
 {
-    public class ActionViewModel : IViewModel
+    public class ActionViewModel : IViewModel<int>
     {
         public int Id { get; set; }
         public GroupViewModel Group { get; set; }
@@ -12,7 +12,7 @@ namespace FinHub.Models.ViewModels
 
         public static ActionViewModel FromModel(Action action)
         {
-            return new ActionViewModel()
+            return action is null ? null : new ActionViewModel()
             {
                 Id = action.Id,
                 Group = GroupViewModel.FromModel(action.Group),

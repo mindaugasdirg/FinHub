@@ -16,7 +16,7 @@ namespace FinHub.Models.EntityModels
         [ForeignKey("GroupId")]
         [Required]
         public Group Group { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         [Required]
         public User User { get; set; }

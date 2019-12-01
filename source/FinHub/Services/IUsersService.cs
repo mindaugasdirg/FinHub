@@ -1,15 +1,15 @@
 using System.Threading.Tasks;
 using FinHub.Models;
-using FinHub.Models.RequestModels;
+using FinHub.Models.EditModels;
 
 namespace FinHub.Services
 {
     public interface IUsersService
     {
-        Task<ServiceResult> CreateAsync(UserRequestModel user);
-        Task<ServiceResult> UpdateAsync(int id, UserRequestModel user);
-        Task<ServiceResult> DeleteAsync(int id);
-        ServiceResult GetUser(int id);
-        ServiceResult GetList();
+        Task<ServiceResult<string>> CreateAsync(UserRequestModel user);
+        Task<ServiceResult<string>> UpdateAsync(string id, UserRequestModel user);
+        Task<ServiceResult<string>> DeleteAsync(string id);
+        Task<ServiceResult<string>> GetUser(string id);
+        Task<string> Login(LoginModel login);
     }
 }

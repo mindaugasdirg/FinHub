@@ -1,7 +1,7 @@
 namespace FinHub.Models.ViewModels
 {
-    public interface IViewModel
+    public interface IViewModel<T>
     {
-        int Id { get; set; }
+        T Id { get; set; }
     }
 }

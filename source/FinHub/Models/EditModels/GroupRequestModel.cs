@@ -1,8 +1,7 @@
-namespace FinHub.Models.RequestModels
+namespace FinHub.Models.EditModels
 {
     public class GroupRequestModel
     {
         public string Name { get; set; }
-        public int AdminId { get; set; }
     }
 }

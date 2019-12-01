@@ -18,7 +18,7 @@ namespace FinHub.Models.EntityModels
         public List<GroupUser> GroupUsers { get; set; }
         public List<Category> Categories { get; set; }
         public List<Transaction> Transactions { get; set; }
-        public int AdminId { get; set; }
+        public string AdminId { get; set; }
         [ForeignKey("AdminId")]
         [Required]
         public User Admin { get; set; }

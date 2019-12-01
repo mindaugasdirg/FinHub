@@ -1,16 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace FinHub.Models.EntityModels
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Required]
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Username { get; set; }
-        public string Email { get; set; }
         [Required]
         public string Role { get; set; }
         public List<GroupUser> GroupUsers { get; set; }

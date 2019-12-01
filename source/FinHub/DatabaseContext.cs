@@ -1,11 +1,11 @@
 using FinHub.Models.EntityModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinHub
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupUser> GroupUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -19,12 +19,15 @@ namespace FinHub
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>().HasQueryFilter(item => !item.Deleted);
+            base.OnModelCreating(builder);
             builder.Entity<Group>().HasQueryFilter(item => !item.Deleted);
             builder.Entity<GroupUser>().HasQueryFilter(item => !item.Deleted);
             builder.Entity<Category>().HasQueryFilter(item => !item.Deleted);
             builder.Entity<Transaction>().HasQueryFilter(item => !item.Deleted);
             builder.Entity<Action>().HasQueryFilter(item => !item.Deleted);
+
+            builder.Entity<Group>().HasIndex(entity => entity.Name).IsUnique();
+            builder.Entity<Group>().HasIndex(entity => entity.GroupCode).IsUnique();
         }
     }
 }
