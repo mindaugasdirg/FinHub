@@ -17,15 +17,17 @@ namespace FinHub.Services
         private readonly ITransactionsRepository transactionsRepository;
         private readonly IGroupsRepository groupsRepository;
         private readonly IAuthorizationService authorizationService;
+        private readonly IActionsService actionService;
         private readonly UserManager<User> usersManager;
 
         public TransactionsService(ITransactionsRepository repository, IGroupsRepository _groupsRepository,
-            IAuthorizationService _authorizationService, UserManager<User> _usersManager)
+            IAuthorizationService _authorizationService, UserManager<User> _usersManager, IActionsService _actionService)
         {
             transactionsRepository = repository;
             groupsRepository = _groupsRepository;
             authorizationService = _authorizationService;
             usersManager = _usersManager;
+            actionService = _actionService;
         }
 
         public async Task<ServiceResult<int>> CreateAsync(int groupId, ClaimsPrincipal user, TransactionRequestModel transaction)
@@ -53,6 +55,8 @@ namespace FinHub.Services
 
             if(result is null)
                 return ServiceResult<int>.Error(500, "Could not create transaction");
+
+            await actionService.CreateAsync(group.Id, authenticatedUser.Id, "Transaction", $"{authenticatedUser.UserName} has added transaction");
             return ServiceResult<int>.Success(TransactionViewModel.FromModel(result));
         }
 
