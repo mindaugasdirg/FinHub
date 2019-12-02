@@ -15,12 +15,15 @@ namespace FinHub.Services
         private readonly IGroupUsersRepository groupUsersRepository;
         private readonly IGroupsRepository groupsRepository;
         private readonly IAuthorizationService authorizationService;
+        private readonly IActionsService actionService;
 
-        public GroupUsersService(IGroupUsersRepository repository, IGroupsRepository _groupsRepository, IAuthorizationService _authorizationService)
+        public GroupUsersService(IGroupUsersRepository repository, IGroupsRepository _groupsRepository, IAuthorizationService _authorizationService,
+            IActionsService _actionService)
         {
             groupUsersRepository = repository;
             groupsRepository = _groupsRepository;
             authorizationService = _authorizationService;
+            actionService = _actionService;
         }
 
         public async Task<ServiceResult<int>> AddUser(string groupCode, User user)
@@ -42,6 +45,8 @@ namespace FinHub.Services
 
             if(result is null)
                 return ServiceResult<int>.Error(500, "Error adding user to group");
+
+            await actionService.CreateAsync(group.Id, user.Id, "Joined", $"{user.UserName} has joined the group");
             return ServiceResult<int>.Success((IViewModel<int>)null);
         }
 
@@ -55,6 +60,7 @@ namespace FinHub.Services
             groupUser.Deleted = true;
 
             var result = await groupUsersRepository.UpdateAsync(groupUser);
+            await actionService.CreateAsync(groupId, user.Id, "Left", $"{user.UserName} has left the group");
 
             return ServiceResult<int>.Success((IViewModel<int>)null);
         }

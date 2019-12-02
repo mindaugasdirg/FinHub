@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FinHub.Models.StatsModels;
+using FinHub.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinHub.Repositories
@@ -30,7 +31,7 @@ namespace FinHub.Repositories
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = UserViewModel.FromModel(t.Key), Amount = t.Select(v => v.Amount).Sum() })
                 .OrderByDescending(u => u.Amount)
                 .FirstOrDefault();
         }
@@ -41,7 +42,7 @@ namespace FinHub.Repositories
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = UserViewModel.FromModel(t.Key), Amount = t.Select(v => v.Amount).Sum() })
                 .OrderBy(u => u.Amount)
                 .FirstOrDefault();
         }
@@ -52,7 +53,7 @@ namespace FinHub.Repositories
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = UserViewModel.FromModel(t.Key), Amount = t.Select(v => v.Amount).Sum() })
                 .OrderBy(u => u.Amount)
                 .FirstOrDefault();
         }
@@ -63,7 +64,7 @@ namespace FinHub.Repositories
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = UserViewModel.FromModel(t.Key), Amount = t.Select(v => v.Amount).Sum() })
                 .OrderByDescending(u => u.Amount)
                 .FirstOrDefault();
         }
@@ -84,7 +85,7 @@ namespace FinHub.Repositories
                 .Include(t => t.User)
                 .Where(t => t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = UserViewModel.FromModel(t.Key), Amount = t.Select(v => v.Amount).Sum() })
                 .ToList();
         }
     }

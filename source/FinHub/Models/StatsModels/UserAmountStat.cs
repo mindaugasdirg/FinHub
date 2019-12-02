@@ -1,9 +1,9 @@
-using FinHub.Models.EntityModels;
+using FinHub.Models.ViewModels;
 
 namespace FinHub.Models.StatsModels
 {
     public class UserAmountStat : AmountStat
     {
-        public User User { get; set; }
+        public UserViewModel User { get; set; }
     }
 }
