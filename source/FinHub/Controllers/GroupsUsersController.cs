@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FinHub.Models.EntityModels;
 using FinHub.Services;
@@ -30,18 +31,18 @@ namespace FinHub.Controllers
             return HandleGetResult(list, true);
         }
 
-        [HttpGet("userId")]
+        [HttpGet("{userId}")]
         public async Task<IActionResult> GetUser(int groupId, string userId)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var list = await groupUsersService.GetGroupUser(User, groupId, userId);
+            var list = await groupUsersService.GetGroupUser(User, groupId, userId.ToString());
             return HandleGetResult(list, false);
         }
 
         [HttpPost()]
-        public async Task<IActionResult> AddUser(string groupCode)
+        public async Task<IActionResult> AddUser([FromBody]string groupCode)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);

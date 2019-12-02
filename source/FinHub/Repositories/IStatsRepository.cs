@@ -6,15 +6,12 @@ namespace FinHub.Repositories
 {
     public interface IStatsRepository
     {
-        UserAmount GetBiggestSpender(int groupId);
-        UserAmount GetSmallestSpender(int groupId);
-        UserAmount GetBiggestDonator(int groupId);
-        UserAmount GetSmallestDonator(int groupId);
-        IEnumerable<UserAmount> GetSpendingByUser(int groupId, string userId);
-        IEnumerable<UserAmount> GetSpendingByUsers(int groupId);
-        decimal GetAverageTransaction(int groupId);
-        object GetSpendingByCategories(int groupId);
-        object GetSpendingByCategory(int groupId, int categoryId);
-        object GetBalanceByDays(int groupId, DateTime since, DateTime to);
+        UserAmountStat GetBiggestSpender(int groupId);
+        UserAmountStat GetSmallestSpender(int groupId);
+        UserAmountStat GetBiggestDonator(int groupId);
+        UserAmountStat GetSmallestDonator(int groupId);
+        IEnumerable<UserAmountStat> GetSpendingByUsers(int groupId);
+        AmountStat GetAverageTransaction(int groupId);
+        IEnumerable<CategoryAmountStat> GetSpendingByCategories(int groupId);
     }
 }

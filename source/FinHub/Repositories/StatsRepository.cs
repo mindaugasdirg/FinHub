@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using FinHub.Models.EntityModels;
 using FinHub.Models.StatsModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,89 +14,77 @@ namespace FinHub.Repositories
             dbContext = context;
         }
 
-        public decimal GetAverageTransaction(int groupId)
+        public AmountStat GetAverageTransaction(int groupId)
         {
-            return dbContext.Transactions
-                .Where(t => t.GroupId == groupId)
-                .Select(t => t.Amount).Average();
+            return new AmountStat()
+            {
+                Amount = dbContext.Transactions
+                    .Where(t => t.GroupId == groupId)
+                    .Select(t => t.Amount).Average()
+            };
         }
 
-        public object GetBalanceByDays(int groupId, DateTime since, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UserAmount GetBiggestDonator(int groupId)
+        public UserAmountStat GetBiggestDonator(int groupId)
         {
             return dbContext.Transactions
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
                 .OrderByDescending(u => u.Amount)
                 .FirstOrDefault();
         }
 
-        public UserAmount GetBiggestSpender(int groupId)
+        public UserAmountStat GetBiggestSpender(int groupId)
         {
             return dbContext.Transactions
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
                 .OrderBy(u => u.Amount)
                 .FirstOrDefault();
         }
 
-        public UserAmount GetSmallestDonator(int groupId)
+        public UserAmountStat GetSmallestDonator(int groupId)
         {
             return dbContext.Transactions
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
                 .OrderBy(u => u.Amount)
                 .FirstOrDefault();
         }
 
-        public UserAmount GetSmallestSpender(int groupId)
+        public UserAmountStat GetSmallestSpender(int groupId)
         {
             return dbContext.Transactions
                 .Include(t => t.User)
                 .Where(t => t.Amount >= 0 && t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
                 .OrderByDescending(u => u.Amount)
                 .FirstOrDefault();
         }
 
-        public object GetSpendingByCategories(int groupId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetSpendingByCategory(int groupId, int categoryId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<UserAmount> GetSpendingByUser(int groupId, string userId)
+        public IEnumerable<CategoryAmountStat> GetSpendingByCategories(int groupId)
         {
             return dbContext.Transactions
-                .Include(t => t.User)
+                .Include(t => t.Category)
                 .Where(t => t.GroupId == groupId)
-                .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .GroupBy(t => t.Category)
+                .Select(g => new CategoryAmountStat() { Category = g.Key, Amount = g.Select(v => v.Amount).Sum() })
                 .ToList();
         }
 
-        public IEnumerable<UserAmount> GetSpendingByUsers(int groupId)
+        public IEnumerable<UserAmountStat> GetSpendingByUsers(int groupId)
         {
             return dbContext.Transactions
                 .Include(t => t.User)
                 .Where(t => t.GroupId == groupId)
                 .GroupBy(t => t.User)
-                .Select(t => new UserAmount() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
+                .Select(t => new UserAmountStat() { User = t.Key, Amount = t.Select(v => v.Amount).Sum() })
                 .ToList();
         }
     }

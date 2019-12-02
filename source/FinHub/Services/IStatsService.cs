@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using FinHub.Models.StatsModels;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using FinHub.Models;
 
 namespace FinHub.Services
 {
     public interface IStatsService
     {
-        IEnumerable<IStat> GetAllStats(int groupId);
-        IStat GetStat(int groupId, string stat);
+        Task<ServiceResult<string>> GetStat(ClaimsPrincipal user, int groupId, string stat);
     }
 }

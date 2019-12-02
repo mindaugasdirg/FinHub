@@ -1,7 +1,9 @@
+using FinHub.Models.ViewModels;
+
 namespace FinHub.Models.StatsModels
 {
-    public interface IStat
+    public abstract class IStat : IViewModel<string>
     {
-         
+        public string Id { get; set; }
     }
 }

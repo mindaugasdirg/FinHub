@@ -23,6 +23,9 @@ namespace FinHub.Authorization
         private bool IsMember(string subject, Group group) =>
             IsOwner(subject, group) || group.GroupUsers.Where(g => g.GroupId == group.Id && g.UserId.Equals(subject)).Any();
 
-        private string GetSubjectClaim(ClaimsPrincipal user) => user.Claims.Where(c => c.Type.Equals(AuthorizationConstants.SUB_CLAIM)).Select(s => s.Value).Single();
+        private string GetSubjectClaim(ClaimsPrincipal user) => user.Claims
+            .Where(c => c.Type.Equals(AuthorizationConstants.SUB_CLAIM))
+            .Select(s => s.Value)
+            .FirstOrDefault();
     }
 }

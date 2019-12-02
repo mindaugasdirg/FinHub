@@ -35,7 +35,7 @@ namespace FinHub.Services
             {
                 Name = group.Name,
                 Balance = 0.0M,
-                GroupCode = group.Name.GetHashCode().ToString(),
+                GroupCode = Math.Abs(group.Name.GetHashCode()).ToString(),
                 AdminId = admin.Id
             };
 
@@ -103,7 +103,7 @@ namespace FinHub.Services
             if(groupEntity is null)
                 return ServiceResult<int>.Error(404, "Group was not found");
 
-            var authorizationResult = await authorizationService.AuthorizeAsync(user, group, GroupOperations.Write);
+            var authorizationResult = await authorizationService.AuthorizeAsync(user, groupEntity, GroupOperations.Write);
             if(!authorizationResult.Succeeded)
                 return ServiceResult<int>.Error(401, "Unauthorized");
 

@@ -46,7 +46,7 @@ namespace FinHub.Controllers
             if(!result.IsSuccess)
                 return HandleError(result);
 
-            return Created($"/{resources}/{result.Model.Id}", result.Model);
+            return Created($"/{resources}/{(result.Model is null ? "" : result.Model.Id.ToString())}", result.Model);
         }
 
         protected IActionResult HandlePutResult<T>(ServiceResult<T> result) =>

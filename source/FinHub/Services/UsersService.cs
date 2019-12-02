@@ -23,14 +23,16 @@ namespace FinHub.Services
         private readonly SignInManager<User> signInManager;
         private readonly IGroupUsersRepository groupUsersRepository;
         private readonly IConfiguration configuration;
+        private readonly IAuthorizationService authorizationService;
 
         public UsersService(UserManager<User> _usersManager, SignInManager<User> _signInManager, IGroupUsersRepository _groupUsersRepository,
-            IConfiguration _configuration)
+            IConfiguration _configuration, IAuthorizationService _authorizationService)
         {
             usersManager = _usersManager;
             signInManager = _signInManager;
             groupUsersRepository = _groupUsersRepository;
             configuration = _configuration;
+            authorizationService = _authorizationService;
         }
 
         public async Task<ServiceResult<string>> CreateAsync(UserRequestModel user)
@@ -54,8 +56,12 @@ namespace FinHub.Services
             return ServiceResult<string>.Success(UserViewModel.FromModel(createdUser));
         }
 
-        public async Task<ServiceResult<string>> DeleteAsync(string id)
+        public async Task<ServiceResult<string>> DeleteAsync(ClaimsPrincipal userClaims, string id)
         {
+            var authorizationResult = await authorizationService.AuthorizeAsync(userClaims, id, new UserIsSelfRequirement());
+            if(!authorizationResult.Succeeded)
+                return ServiceResult<string>.Error(401, "Trying to delete other user");
+
             var user = await usersManager.FindByIdAsync(id);
 
             if(user is null)
@@ -86,10 +92,11 @@ namespace FinHub.Services
             return ServiceResult<string>.Success(UserViewModel.FromModel(user));
         }
 
-        public async Task<ServiceResult<string>> UpdateAsync(string id, UserRequestModel user)
+        public async Task<ServiceResult<string>> UpdateAsync(ClaimsPrincipal userClaims, string id, UserRequestModel user)
         {
-            if(id != user.Id)
-                return ServiceResult<string>.Error(403, "Cannot modify other users");
+            var authorizationResult = await authorizationService.AuthorizeAsync(userClaims, id, new UserIsSelfRequirement());
+            if(!authorizationResult.Succeeded)
+                return ServiceResult<string>.Error(401, "Trying to update other user");
 
             var userEntity = await usersManager.FindByIdAsync(id);
 
@@ -122,7 +129,6 @@ namespace FinHub.Services
             var claims = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

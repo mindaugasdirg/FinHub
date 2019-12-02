@@ -34,7 +34,7 @@ namespace FinHub.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await m_service.UpdateAsync(id, user);
+            var result = await m_service.UpdateAsync(User, id, user);
 
             return HandlePutResult(result);
         }
@@ -45,7 +45,7 @@ namespace FinHub.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await m_service.DeleteAsync(id);
+            var result = await m_service.DeleteAsync(User, id);
 
             return HandleDeleteResult(result);
         }

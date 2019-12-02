@@ -2,9 +2,8 @@ using FinHub.Models.EntityModels;
 
 namespace FinHub.Models.StatsModels
 {
-    public class UserAmount : IStat
+    public class UserAmountStat : AmountStat
     {
         public User User { get; set; }
-        public decimal Amount { get; set; }
     }
 }
