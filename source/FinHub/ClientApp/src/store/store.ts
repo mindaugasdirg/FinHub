@@ -1,23 +1,12 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { routerReducer, routerMiddleware, RouterState } from 'react-router-redux';
-import { createBrowserHistory } from 'history';
-import { userReducer } from './reducers/user/userReducer';
-import { UserState } from './reducers/user/userTypes';
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from "react-router-redux";
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import { normalizeMaybe } from "../common/utils";
+import { rootReducer } from "./reducers/reducer";
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') || undefined;
+const baseUrl = normalizeMaybe(document.getElementsByTagName("base")[0].getAttribute("href"));
 const history = createBrowserHistory({ basename: baseUrl });
-
-export interface RootState {
-    router: RouterState;
-    user: UserState;
-}
-
-const rootReducer = combineReducers<RootState>({
-    router: routerReducer,
-    user: userReducer,
-});
-
 
 const middleware = [
     thunk,
@@ -26,7 +15,7 @@ const middleware = [
 
 export const store = createStore(
     rootReducer,
-    applyMiddleware(...middleware)
+    applyMiddleware(...middleware),
 );
 
 export type Dispatch = typeof store.dispatch;

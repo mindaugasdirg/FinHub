@@ -1,12 +1,12 @@
-import { UserActionTypes } from "./userTypes";
+import { User } from "../../../common/types";
+import { createAction, createActionWithPayload } from "../../../common/utils";
 
-export namespace UserActions {
-    export const login = (username: string, email: string, token: string) => ({
-        type: UserActionTypes.LOGIN,
-        payload: { username, email, token },
-    });
-
-    export const logout = () => ({
-        type: UserActionTypes.LOGOUT
-    });
+export enum UserActionTypes {
+    LOGIN = "LOGIN",
+    LOGOUT = "LOGOUT",
 }
+
+export const UserActions = {
+    login: (user: User, token: string) => createActionWithPayload(UserActionTypes.LOGIN, { user, token }),
+    logout: () => createAction(UserActionTypes.LOGOUT),
+};

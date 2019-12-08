@@ -1,8 +1,8 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 
 const Index = () => (
     <Grid container spacing={3}>
@@ -17,7 +17,7 @@ const Index = () => (
                 <Button variant="contained" color="primary">Create your group</Button>
                 <Button variant="contained" color="primary">Join group</Button>
                 <Typography variant="h6">Already a member?</Typography>
-                <Button>Login</Button>
+                <Button variant="contained">Login</Button>
             </Paper>
         </Grid>
     </Grid>

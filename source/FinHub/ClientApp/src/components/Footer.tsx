@@ -1,5 +1,5 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 
 const Footer = () => (
     <Typography align="center" variant="subtitle2">

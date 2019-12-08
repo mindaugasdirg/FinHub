@@ -1,10 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './registerServiceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import App from "./App";
+import * as serviceWorker from "./registerServiceWorker";
+import { store } from "./store/store";
 
 ReactDOM.render(
-    <App />, document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change
