@@ -1,9 +1,8 @@
 import React from 'react';
+import Index from '../components/Index/Index';
 
 const Home = () => (
-    <>
-        <div>Home directory</div>
-    </>
+    <Index />
 );
 
 export default Home;
