@@ -2,20 +2,22 @@ import React from 'react';
 import { Route, Router } from 'react-router';
 import Home from './routes/Home';
 import { createBrowserHistory } from 'history';
-import NavigationBar from './components/NavigationBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TopBar from './components/TopBar/TopBar';
 import Footer from './components/Footer';
-import Content from './components/Content';
+import Container from '@material-ui/core/Container';
 
 const history = createBrowserHistory();
 
 const App = () => (
     <>
-        <NavigationBar />
-        <Content>
+        <CssBaseline />
+        <TopBar />
+        <Container>
             <Router history={history}>
                 <Route exact path='/' component={Home} />
             </Router>
-        </Content>
+        </Container>
         <Footer />
     </>
 );

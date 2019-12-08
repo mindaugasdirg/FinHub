@@ -1,8 +1,10 @@
 import React from 'react';
-import '../styles/footer.css';
+import Typography from '@material-ui/core/Typography';
 
 const Footer = () => (
-    <div className="footer">Mindaugas Dirginčius, IFF-6/8</div>
+    <Typography align="center" variant="subtitle2">
+        Mindaugas Dirginčius, IFF-6/8
+    </Typography>
 );
 
 export default Footer;
