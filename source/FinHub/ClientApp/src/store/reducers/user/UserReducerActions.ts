@@ -6,7 +6,7 @@ export enum UserActionTypes {
     LOGOUT = "LOGOUT",
 }
 
-export const UserActions = {
+export const UserReducerActions = {
     login: (user: User, token: string) => createActionWithPayload(UserActionTypes.LOGIN, { user, token }),
     logout: () => createAction(UserActionTypes.LOGOUT),
 };

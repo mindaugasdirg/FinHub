@@ -1,12 +1,12 @@
 import { ActionUnion } from "../../../common/types";
-import { GroupsActions, GroupsActionTypes } from "./GroupsActions";
+import { GroupsActionTypes, GroupsReducerActions } from "./GroupsReducerActions";
 import { GroupsState } from "./GroupsState";
 
 const initialState: GroupsState = {
     groups: [],
 };
 
-export function groupsReducer(state = initialState, action: ActionUnion<typeof GroupsActions>): GroupsState {
+export function groupsReducer(state = initialState, action: ActionUnion<typeof GroupsReducerActions>): GroupsState {
     switch (action.type) {
         case GroupsActionTypes.ADD_GROUP:
             return { ...state, groups: [...state.groups, action.payload.group] };

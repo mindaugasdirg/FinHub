@@ -18,4 +18,4 @@ export const store = createStore(
     applyMiddleware(...middleware),
 );
 
-export type Dispatch = typeof store.dispatch;
+export type Dispatcher = typeof store.dispatch;

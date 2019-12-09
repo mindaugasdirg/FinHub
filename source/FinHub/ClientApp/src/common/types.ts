@@ -1,5 +1,9 @@
 export type Callable = (...args: any[]) => any;
 
+export type Maybe<T> = T | undefined;
+
+export type Either<T> = T | string;
+
 export interface Action<T extends string> {
     type: T;
 }
@@ -14,7 +18,12 @@ export interface ActionCreator {
 
 export type ActionUnion<T extends ActionCreator> = ReturnType<T[keyof T]>;
 
-export type Maybe<T> = T | undefined;
+export enum RequestMethods {
+    GET = "GET",
+    POST = "POST",
+    PUT = "PUT",
+    DELETE = "DELETE",
+}
 
 export interface User {
     id: string;
@@ -52,4 +61,20 @@ export interface UserAction {
     user: User;
     actionType: string;
     description: string;
+}
+
+export interface AmountStat {
+    id: number;
+    amount: number;
+}
+
+export interface CategoryStat {
+    id: number;
+    category: Category;
+}
+
+export interface UserAmountStat {
+    id: number;
+    user: User;
+    amount: number;
 }

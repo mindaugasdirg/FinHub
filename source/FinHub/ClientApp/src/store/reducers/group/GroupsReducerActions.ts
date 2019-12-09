@@ -7,7 +7,7 @@ export enum GroupsActionTypes {
     ADD_GROUP = "ADD_GROUP",
 }
 
-export const GroupsActions = {
+export const GroupsReducerActions = {
     addGroups: (group: Group) => createActionWithPayload(GroupsActionTypes.ADD_GROUP, { group }),
     setActiveGroup: (group: Group) => createActionWithPayload(GroupsActionTypes.SET_ACTIVE_GROUP, { group }),
     setGroups: (groups: Group[]) => createActionWithPayload(GroupsActionTypes.SET_GROUPS, { groups }),
