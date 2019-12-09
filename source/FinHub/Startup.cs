@@ -129,15 +129,15 @@ namespace FinHub
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            // app.UseSpa(spa =>
-            // {
-            //     spa.Options.SourcePath = "ClientApp";
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-            //     if (env.IsDevelopment())
-            //     {
-            //         spa.UseReactDevelopmentServer(npmScript: "start");
-            //     }
-            // });
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
 
             if (!(Environment.GetEnvironmentVariable(Constants.CONN_STR_ENV_KEY) is null))
                 UpdateDatabase(app);

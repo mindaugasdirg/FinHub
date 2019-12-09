@@ -1,15 +1,11 @@
 import Button from "@material-ui/core/Button";
 import React from "react";
+import { Link } from "react-router-dom";
 
-interface Props {
-    onLogin: () => void;
-    onSignUp: () => void;
-}
-
-const GuestButtons = (props: Props) => (
+const GuestButtons = () => (
     <>
-        <Button onClick={props.onLogin}>Login</Button>
-        <Button onClick={props.onSignUp}>Sign Up</Button>
+        <Button component={Link} to="/login">Login</Button>
+        <Button component={Link} to="/signup">Sign Up</Button>
     </>
 );
 

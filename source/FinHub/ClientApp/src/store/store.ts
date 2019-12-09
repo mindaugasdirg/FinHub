@@ -1,6 +1,7 @@
 import { createBrowserHistory } from "history";
 import { routerMiddleware } from "react-router-redux";
 import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { normalizeMaybe } from "../common/utils";
 import { rootReducer } from "./reducers/reducer";
@@ -15,7 +16,7 @@ const middleware = [
 
 export const store = createStore(
     rootReducer,
-    applyMiddleware(...middleware),
+    composeWithDevTools(applyMiddleware(...middleware)),
 );
 
 export type Dispatcher = typeof store.dispatch;

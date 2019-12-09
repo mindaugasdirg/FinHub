@@ -1,15 +1,26 @@
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import { compose } from "lodash/fp";
 import React from "react";
+import { connect } from "react-redux";
+import { AnyAction } from "react-redux/node_modules/redux";
+import { ThunkDispatch } from "redux-thunk";
+import { RootState } from "../../store/reducers/reducer";
+import { UserReducerActions } from "../../store/reducers/user/UserReducerActions";
 import GuestButtons from "./GuestButtons";
 import Navigation from "./Navigation";
 import UserButtons from "./UserButtons";
 
-export default function TopBar() {
-    const [loggedIn, setLoggedIn] = React.useState(false);
+const mapStateToProps = (state: RootState) => ({
+    user: state.user.user,
+});
 
-    const setAccount = (state: boolean) => () => setLoggedIn(state);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
+    logout: compose(dispatch, UserReducerActions.logout),
+});
+
+function TopBar(props: ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) {
     // tslint:disable-next-line: no-console
     const openProfile = () => console.log("Opening profile");
     // tslint:disable-next-line: no-console
@@ -21,15 +32,19 @@ export default function TopBar() {
                 <Typography variant="h5">
                     FinHub
                 </Typography>
-                {loggedIn ?
+                {props.user ?
                     <>
                         <Navigation openMembers={openLink("members")} openOverview={openLink("overview")}
                             openTransactions={openLink("transactions")} />
-                        <UserButtons onProfileOpen={openProfile} onLogout={setAccount(false)} />
+                        <UserButtons onProfileOpen={openProfile} onLogout={props.logout} />
                     </> :
-                    <GuestButtons onLogin={setAccount(true)} onSignUp={setAccount(true)} />
+                    <GuestButtons />
                 }
             </Toolbar>
         </AppBar>
     );
 }
+
+const ConnectedTopBar = connect(mapStateToProps, mapDispatchToProps)(TopBar);
+
+export default ConnectedTopBar;

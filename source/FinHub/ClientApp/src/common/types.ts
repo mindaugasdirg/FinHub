@@ -18,13 +18,6 @@ export interface ActionCreator {
 
 export type ActionUnion<T extends ActionCreator> = ReturnType<T[keyof T]>;
 
-export enum RequestMethods {
-    GET = "GET",
-    POST = "POST",
-    PUT = "PUT",
-    DELETE = "DELETE",
-}
-
 export interface User {
     id: string;
     userName: string;

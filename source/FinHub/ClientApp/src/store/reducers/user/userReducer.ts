@@ -11,6 +11,8 @@ export function userReducer(state = initialState, action: ActionUnion<typeof Use
             return { ...state, ...action.payload };
         case UserActionTypes.LOGOUT:
             return { ...state, user: undefined, token: undefined };
+        case UserActionTypes.SET_USER:
+            return { ...state, user: action.payload.user };
         default:
             return state;
     }

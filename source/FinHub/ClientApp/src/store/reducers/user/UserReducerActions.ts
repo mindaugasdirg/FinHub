@@ -4,9 +4,11 @@ import { createAction, createActionWithPayload } from "../../../common/utils";
 export enum UserActionTypes {
     LOGIN = "LOGIN",
     LOGOUT = "LOGOUT",
+    SET_USER = "SET_USER",
 }
 
 export const UserReducerActions = {
-    login: (user: User, token: string) => createActionWithPayload(UserActionTypes.LOGIN, { user, token }),
+    login: (token: string) => createActionWithPayload(UserActionTypes.LOGIN, { token }),
     logout: () => createAction(UserActionTypes.LOGOUT),
+    setUser: (user: User) => createActionWithPayload(UserActionTypes.SET_USER, { user }),
 };

@@ -1,29 +1,26 @@
-import { User } from "../common/types";
+import { NetworkApi } from "../apis/NetworkApi";
+import { UsersApi } from "../apis/UsersApi";
+import { mapEitherBoth } from "../common/utils";
 import { UserReducerActions } from "../store/reducers/user/UserReducerActions";
 import { Dispatcher } from "../store/store";
-import { NetworkApi } from "../apis/NetworkApi";
-import { RootState } from "../store/reducers/reducer";
 
-export namespace UserActions {
-    const apiPath = "/api/users";
+const extractUserId = (token: string) => {
+    const base64Url = token.split(".")[1];
+    return JSON.parse(atob(base64Url)).sub as string;
+};
 
-    export const login = (userName: string, password: string) => async (dispatch: Dispatcher) => {
-        const result = await NetworkApi.post("/authenticate", { userName, password });
-        if (!result.ok) return;
-        const token = await result.text();
-        const id = extractUserId(token);
-        const user = await load(token, id);
-        if (!user) return;
-        dispatch(UserReducerActions.login(user, token));
-    };
-
-    export const get = (id: string) => async (_dispatch: Dispatcher, getState: () => RootState) => {
-        const token = getState().user.token!;
-        return NetworkApi.authenticatedRequest()
-    };
-
-    const extractUserId = (token: string) => {
-        const base64Url = token.split(".")[1];
-        return JSON.parse(atob(base64Url)).sub as string;
-    };
-}
+export const login = (userName: string, password: string) => async (dispatch: Dispatcher) => {
+    const result = await fetch("/authenticate", NetworkApi.getFetchOptions("POST", { userName, password }));
+    if (!result.ok) return;
+    const token = await result.text();
+    const id = extractUserId(token);
+    dispatch(UserReducerActions.login(token));
+    const maybeUser = await UsersApi.get(token, id);
+    mapEitherBoth(
+        // tslint:disable-next-line: no-console
+        user => { console.log("setting user"); dispatch(UserReducerActions.setUser(user)); },
+        // tslint:disable-next-line: no-console
+        error => { console.log(error); },
+        maybeUser,
+    );
+};
