@@ -9,6 +9,6 @@ export enum GroupsActionTypes {
 
 export const GroupsReducerActions = {
     addGroups: (group: Group) => createActionWithPayload(GroupsActionTypes.ADD_GROUP, { group }),
-    setActiveGroup: (group: Group) => createActionWithPayload(GroupsActionTypes.SET_ACTIVE_GROUP, { group }),
+    setActiveGroup: (group?: Group) => createActionWithPayload(GroupsActionTypes.SET_ACTIVE_GROUP, { group }),
     setGroups: (groups: Group[]) => createActionWithPayload(GroupsActionTypes.SET_GROUPS, { groups }),
 };

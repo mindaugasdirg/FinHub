@@ -1,10 +1,22 @@
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { compose } from "lodash/fp";
 import React from "react";
+import { connect } from "react-redux";
+import { AnyAction } from "react-redux/node_modules/redux";
+import { ThunkDispatch } from "redux-thunk";
+import { signup } from "../../actions/UserActions";
 import { useFormField } from "../../common/utils";
 
-const SignUp = () => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
+    signUp: compose(dispatch, signup),
+});
+
+function SignUp(props: ReturnType<typeof mapDispatchToProps>) {
     const [username, setUsername] = useFormField();
     const [email, setEmail] = useFormField();
     const [password, setPassword] = useFormField();
@@ -13,14 +25,17 @@ const SignUp = () => {
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!username || !email || !password || !passwordRepeat || password !== passwordRepeat) return;
-        // tslint:disable-next-line: no-console
-        console.log(username);
-        // tslint:disable-next-line: no-console
-        console.log(password);
+        props.signUp(username, email, password);
     };
 
     return (
         <Paper>
+            <Avatar>
+                <LockOutlinedIcon />
+            </Avatar>
+            <Typography variant="h1">
+                Sign up
+            </Typography>
             <form onSubmit={onSubmit}>
                 <TextField
                     variant="outlined"
@@ -70,6 +85,8 @@ const SignUp = () => {
             </form>
         </Paper>
     );
-};
+}
 
-export default SignUp;
+const ConnectedSignUp = connect(null, mapDispatchToProps)(SignUp);
+
+export default ConnectedSignUp;

@@ -1,6 +1,9 @@
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { compose } from "lodash/fp";
 import React from "react";
 import { connect } from "react-redux";
@@ -29,6 +32,12 @@ const Login = (props: Props & ReturnType<typeof mapDispatchToProps>) => {
 
     return (
         <Paper>
+            <Avatar>
+                <LockOutlinedIcon />
+            </Avatar>
+            <Typography variant="h1">
+                Log in
+            </Typography>
             <form onSubmit={onSubmit}>
                 <TextField
                     variant="outlined"

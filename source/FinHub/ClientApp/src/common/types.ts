@@ -18,6 +18,12 @@ export interface ActionCreator {
 
 export type ActionUnion<T extends ActionCreator> = ReturnType<T[keyof T]>;
 
+export interface RegistrationUser {
+    userName: string;
+    email: string;
+    password: string;
+}
+
 export interface User {
     id: string;
     userName: string;

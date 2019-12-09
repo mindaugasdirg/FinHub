@@ -8,6 +8,6 @@ export const GroupsApi = {
     del: NetworkApi.remove<Group>(apiPath),
     getList: NetworkApi.getList<Group[]>(apiPath),
     getOne: NetworkApi.getOne<Group>(apiPath),
-    join: NetworkApi.createChild<any>("users", apiPath),
+    join: NetworkApi.createChild<string>("users", apiPath),
     update: NetworkApi.update<Group>(apiPath),
 };

@@ -7,7 +7,7 @@ import { normalizeMaybe } from "../common/utils";
 import { rootReducer } from "./reducers/reducer";
 
 const baseUrl = normalizeMaybe(document.getElementsByTagName("base")[0].getAttribute("href"));
-const history = createBrowserHistory({ basename: baseUrl });
+export const history = createBrowserHistory({ basename: baseUrl });
 
 const middleware = [
     thunk,
