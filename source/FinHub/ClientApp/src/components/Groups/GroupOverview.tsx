@@ -17,7 +17,7 @@ const mapDispatchToProps = {
     setActiveGroup: GroupsReducerActions.setActiveGroup,
 };
 
-const GroupList = (props: ConnectedProps<typeof connectedProps>) => {
+const GroupOverview = (props: ConnectedProps<typeof connectedProps>) => {
     return (
         <>
             <GroupButtons />
@@ -40,4 +40,4 @@ const GroupList = (props: ConnectedProps<typeof connectedProps>) => {
 };
 
 const connectedProps = connect(mapStateToProps, mapDispatchToProps);
-export const ConnectedGroupList = connectedProps(GroupList);
+export const ConnectedGroupOverview = connectedProps(GroupOverview);

@@ -1,10 +1,10 @@
-import { RegistrationUser, User } from "../common/types";
+import { RegistrationFields, User } from "../common/types";
 import { NetworkApi } from "./NetworkApi";
 
 const apiPath = "users";
 
 export const UsersApi = {
-    create: (user: RegistrationUser) => fetch("api/users", NetworkApi.getFetchOptions("POST", user)).then(NetworkApi.parse<User>()),
+    create: (user: RegistrationFields) => fetch("api/users", NetworkApi.getFetchOptions("POST", user)).then(NetworkApi.parse<User>()),
     del: NetworkApi.remove<User>(apiPath),
     get: NetworkApi.getOne<User>(apiPath),
     getGroupUser: NetworkApi.getChildren<User>(apiPath, "groups"),

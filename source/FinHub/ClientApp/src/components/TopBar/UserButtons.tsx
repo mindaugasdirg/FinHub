@@ -10,7 +10,7 @@ interface Props {
     onLogout: () => void;
 }
 
-export default function UserButtons(props: Props) {
+export function UserButtons(props: Props) {
     const [open, setOpen] = React.useState(false);
     const ref = React.useRef<HTMLButtonElement | null>(null);
 

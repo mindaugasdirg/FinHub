@@ -6,9 +6,7 @@ interface Props extends RouteProps {
     redirect: string;
 }
 
-const ProtectedRoute = (props: Props) => (props.locked ?
-    <Route {...props} /> :
-    <Route {...props} component={() => <Redirect to={{ pathname: props.redirect }} />} render={undefined} />
+export const ProtectedRoute = (props: Props) => (props.locked ?
+    <Route {...props} component={() => <Redirect to={{ pathname: props.redirect }} />} render={undefined} /> :
+    <Route {...props} />
 );
-
-export default ProtectedRoute;

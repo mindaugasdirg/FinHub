@@ -1,4 +1,3 @@
-import { Either } from "../common/types";
 
 const authenticatedRequest = <T>(method: string, url: string, token: string, id?: string, body?: T) =>
     fetch(`api/${url}${id ? `/${id}` : ""}`, {
@@ -7,7 +6,7 @@ const authenticatedRequest = <T>(method: string, url: string, token: string, id?
         method,
     });
 
-const parse = <T>() => (response: Response): Promise<Either<T>> => response.ok ? response.json() as Promise<T> : response.text();
+const parse = <T>() => (response: Response): Promise<T | string> => response.ok ? response.json() as Promise<T> : response.text();
 
 export const NetworkApi = {
     create: <T>(url: string) => (token: string, body: T) => authenticatedRequest("POST", url, token, undefined, body).then(parse<T>()),

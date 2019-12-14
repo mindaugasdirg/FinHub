@@ -2,8 +2,6 @@ export type Callable = (...args: any[]) => any;
 
 export type Maybe<T> = T | undefined;
 
-export type Either<T> = T | string;
-
 export interface Action<T extends string> {
     type: T;
 }
@@ -18,11 +16,35 @@ export interface ActionCreator {
 
 export type ActionUnion<T extends ActionCreator> = ReturnType<T[keyof T]>;
 
-export interface RegistrationUser {
+// form types
+
+export interface RegistrationFields {
     userName: string;
     email: string;
     password: string;
 }
+
+export interface LoginFields {
+    username: string;
+    password: string;
+}
+
+export interface CategoryFields {
+    name: string;
+    description: string;
+}
+
+export interface GroupFields {
+    name: string;
+}
+
+export interface TransactionFields {
+    amount: number;
+    description: string;
+    categoryId: number;
+}
+
+// view types
 
 export interface User {
     id: string;
@@ -52,6 +74,7 @@ export interface Transaction {
     category: Category;
     groupId: number;
     userId: string;
+    username?: string;
 }
 
 export interface UserAction {

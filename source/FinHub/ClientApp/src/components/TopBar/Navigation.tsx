@@ -2,24 +2,10 @@ import Button from "@material-ui/core/Button";
 import React from "react";
 import { Link } from "react-router-dom";
 
-interface Props {
-    openOverview: () => void;
-    openTransactions: () => void;
-    openMembers: () => void;
-    isGroupSelected: boolean;
-}
-
-const Navigation = (props: Props) => (
+export const Navigation = () => (
     <>
-        <Button component={Link} to="/groups">Groups</Button>
-        {props.isGroupSelected &&
-            <>
-                <Button onClick={props.openOverview}>Overview</Button>
-                <Button onClick={props.openTransactions}>Transactions</Button>
-                <Button onClick={props.openMembers}>Members</Button>
-            </>
-        }
+        <Button component={Link} to="/overview">Overview</Button>
+        <Button component={Link} to="/transactions">Transactions</Button>
+        <Button component={Link} to="/members">Members</Button>
     </>
 );
-
-export default Navigation;

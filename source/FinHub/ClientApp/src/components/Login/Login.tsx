@@ -6,26 +6,23 @@ import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { compose } from "lodash/fp";
 import React from "react";
-import { connect } from "react-redux";
-import { AnyAction } from "react-redux/node_modules/redux";
-import { ThunkDispatch } from "redux-thunk";
+import { connect, ConnectedProps } from "react-redux";
 import { login } from "../../actions/UserActions";
-import { useFormField } from "../../common/utils";
+import { preventDefault, useFormField } from "../../common/utils";
 
 interface Props {
     onSignUp: () => void;
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
-    onLogin: compose(dispatch, login),
-});
+const mapDispatchToProps = {
+    onLogin: login,
+};
 
-const Login = (props: Props & ReturnType<typeof mapDispatchToProps>) => {
+const Login = (props: Props & ConnectedProps<typeof connectedProps>) => {
     const [username, setUsername] = useFormField();
     const [password, setPassword] = useFormField();
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const onSubmit = () => {
         if (!username || !password) return;
         props.onLogin(username, password);
     };
@@ -38,7 +35,7 @@ const Login = (props: Props & ReturnType<typeof mapDispatchToProps>) => {
             <Typography variant="h1">
                 Log in
             </Typography>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={compose(onSubmit, preventDefault)}>
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -68,6 +65,5 @@ const Login = (props: Props & ReturnType<typeof mapDispatchToProps>) => {
     );
 };
 
-const ConnectedLogin = connect(null, mapDispatchToProps)(Login);
-
-export default ConnectedLogin;
+const connectedProps = connect(null, mapDispatchToProps);
+export const ConnectedLogin = connectedProps(Login);

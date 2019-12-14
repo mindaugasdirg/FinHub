@@ -1,10 +1,7 @@
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { compose } from "lodash/fp";
 import React from "react";
-import { connect } from "react-redux";
-import { AnyAction } from "react-redux/node_modules/redux";
-import { ThunkDispatch } from "redux-thunk";
+import { connect, ConnectedProps } from "react-redux";
 import { load } from "../../actions/GroupsActions";
 import { GroupsApi } from "../../apis/GroupsApi";
 import { useFormField } from "../../common/utils";
@@ -14,11 +11,11 @@ const mapStateToProps = (state: RootState) => ({
     token: state.user.token!,
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
-    load: compose(dispatch, load),
-});
+const mapDispatchToProps = {
+    load,
+};
 
-const JoinGroup = (props: ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>) => {
+const JoinGroup = (props: ConnectedProps<typeof connectedProps>) => {
     const [groupCode, setGroupCode] = useFormField();
 
     const onSubmit = async (event: React.FormEvent) => {
@@ -43,6 +40,5 @@ const JoinGroup = (props: ReturnType<typeof mapStateToProps> & ReturnType<typeof
     );
 };
 
-const ConnectedJoinGroup = connect(mapStateToProps, mapDispatchToProps)(JoinGroup);
-
-export default ConnectedJoinGroup;
+const connectedProps = connect(mapStateToProps, mapDispatchToProps);
+export const ConnectedJoinGroup = connectedProps(JoinGroup);

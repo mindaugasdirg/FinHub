@@ -4,19 +4,16 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { compose } from "lodash/fp";
 import React from "react";
-import { connect } from "react-redux";
-import { AnyAction } from "react-redux/node_modules/redux";
-import { ThunkDispatch } from "redux-thunk";
+import { connect, ConnectedProps } from "react-redux";
 import { signup } from "../../actions/UserActions";
 import { useFormField } from "../../common/utils";
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
-    signUp: compose(dispatch, signup),
-});
+const mapDispatchToProps = {
+    signUp: signup,
+};
 
-function SignUp(props: ReturnType<typeof mapDispatchToProps>) {
+function SignUp(props: ConnectedProps<typeof connectedProps>) {
     const [username, setUsername] = useFormField();
     const [email, setEmail] = useFormField();
     const [password, setPassword] = useFormField();
@@ -87,6 +84,5 @@ function SignUp(props: ReturnType<typeof mapDispatchToProps>) {
     );
 }
 
-const ConnectedSignUp = connect(null, mapDispatchToProps)(SignUp);
-
-export default ConnectedSignUp;
+const connectedProps = connect(null, mapDispatchToProps);
+export const ConnectedSignUp = connectedProps(SignUp);

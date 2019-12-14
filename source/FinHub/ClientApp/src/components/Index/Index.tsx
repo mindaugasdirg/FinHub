@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 
-const Index = () => (
+export const Index = () => (
     <Grid container spacing={3}>
         <Grid item md={6} xs={12}>
             <Paper>
@@ -22,5 +22,3 @@ const Index = () => (
         </Grid>
     </Grid>
 );
-
-export default Index;
