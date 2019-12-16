@@ -1,4 +1,4 @@
-import { RegistrationFields, User } from "../common/types";
+import { RegistrationFields, User, UserUpdateFields } from "../common/types";
 import { NetworkApi } from "./NetworkApi";
 
 const apiPath = "users";
@@ -9,5 +9,5 @@ export const UsersApi = {
     get: NetworkApi.getOne<User>(apiPath),
     getGroupUser: NetworkApi.getChildren<User>(apiPath, "groups"),
     getGroupUsers: NetworkApi.getChildren<User[]>(apiPath, "groups"),
-    update: NetworkApi.update<User>(apiPath),
+    update: NetworkApi.update<UserUpdateFields, User>(apiPath),
 };

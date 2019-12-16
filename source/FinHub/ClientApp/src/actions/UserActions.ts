@@ -4,6 +4,8 @@ import { RootState } from "../store/reducers/reducer";
 import { UserReducerActions } from "../store/reducers/user/UserReducerActions";
 import { Dispatcher, history } from "../store/store";
 import { load } from "./GroupsActions";
+import { AlertsReducerActions } from "../store/reducers/alerts/AlertsReducerActions";
+import { AlertTypes } from "../common/types";
 
 const extractUserId = (token: string) => {
     const base64Url = token.split(".")[1];
@@ -18,8 +20,7 @@ export const login = (userName: string, password: string) => async (dispatch: Di
     dispatch(UserReducerActions.login(token));
     const maybeUser = await UsersApi.get(token, id);
     if (typeof maybeUser === "string") {
-        // tslint:disable-next-line: no-console
-        console.log(maybeUser);
+        dispatch(AlertsReducerActions.addAlert(AlertTypes.Error, "Wrong username or password"));
         return;
     }
     dispatch(UserReducerActions.setUser(maybeUser));
@@ -29,8 +30,7 @@ export const login = (userName: string, password: string) => async (dispatch: Di
 export const signup = (username: string, email: string, password: string) => async (dispatch: Dispatcher, getState: () => RootState) => {
     const result = await UsersApi.create({ userName: username, email, password });
     if (typeof result === "string") {
-        // tslint:disable-next-line: no-console
-        console.log(result);
+        dispatch(AlertsReducerActions.addAlert(AlertTypes.Error, result));
         return;
     }
     login(result.userName, password)(dispatch, getState);

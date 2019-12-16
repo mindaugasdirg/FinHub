@@ -3,10 +3,10 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { GroupsReducerActions } from "../../store/reducers/group/GroupsReducerActions";
+import { setActiveGroup } from "../../actions/GroupsActions";
 import { RootState } from "../../store/reducers/reducer";
-import { GroupButtons } from "./GroupButtons";
 import { GroupListItem } from "./GroupListItem";
+import { GroupsButtons } from "./GroupsButtons";
 
 const mapStateToProps = (state: RootState) => ({
     activeGroup: state.groups.activeGroup,
@@ -14,13 +14,13 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-    setActiveGroup: GroupsReducerActions.setActiveGroup,
+    setActiveGroup,
 };
 
 const GroupList = (props: ConnectedProps<typeof connectedProps>) => {
     return (
         <>
-            <GroupButtons />
+            <GroupsButtons />
             <Paper>
                 {props.groups.length ?
                     <List>

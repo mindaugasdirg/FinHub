@@ -33,6 +33,7 @@
         "arrow-parens": false,
         "curly": false,
         "no-namespace": false,
+        "object-literal-sort-keys": false,
         "variable-name": {
             "options": [
               "ban-keywords",

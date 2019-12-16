@@ -1,10 +1,20 @@
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import SettingsIcon from "@material-ui/icons/Settings";
 import React from "react";
-import { ConnectedJoinGroup } from "./JoinGroup";
+import { ResourceButtons } from "../common/ResourceButtons";
 
-export const GroupButtons = () => (
-    <>
-        <Button variant="contained" color="primary">Create Group</Button>
-        <ConnectedJoinGroup />
-    </>
+interface Props {
+    name: string;
+    isAdmin: boolean;
+}
+
+export const GroupButtons = (props: Props) => (
+    <ResourceButtons main={<Typography variant="h3">{props.name}</Typography>} >
+        {props.isAdmin &&
+            <IconButton>
+                <SettingsIcon />
+            </IconButton>
+        }
+    </ResourceButtons>
 );

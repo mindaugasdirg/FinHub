@@ -1,12 +1,11 @@
-import List from "@material-ui/core/List";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { GroupsReducerActions } from "../../store/reducers/group/GroupsReducerActions";
+import { setActiveGroup } from "../../actions/GroupsActions";
 import { RootState } from "../../store/reducers/reducer";
 import { GroupButtons } from "./GroupButtons";
-import { GroupListItem } from "./GroupListItem";
+import { GroupGeneralCard } from "./GroupGeneralCard";
+import { useGroupOverViewStyles } from "../../theme/groupsStyles";
 
 const mapStateToProps = (state: RootState) => ({
     activeGroup: state.groups.activeGroup,
@@ -14,27 +13,19 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = {
-    setActiveGroup: GroupsReducerActions.setActiveGroup,
+    setActiveGroup,
 };
 
 const GroupOverview = (props: ConnectedProps<typeof connectedProps>) => {
+    const classes = useGroupOverViewStyles();
     return (
         <>
-            <GroupButtons />
-            <Paper>
-                {props.groups.length ?
-                    <List>
-                        {props.groups.map(group =>
-                            <GroupListItem
-                                key={group.id}
-                                group={group}
-                                selected={props.activeGroup && group.id === props.activeGroup.id}
-                                onClick={() => props.setActiveGroup(group)}
-                            />)}
-                    </List> :
-                    <Typography variant="h4">No groups</Typography>
-                }
-            </Paper>
+            <GroupButtons name={props.activeGroup!.name} isAdmin={true}/>
+            <Grid className={classes.grid} container xs={12} sm={12} md={12} lg={6} xl={6} spacing={3}>
+                <Grid item>
+                    <GroupGeneralCard group={props.activeGroup!}/>
+                </Grid>
+            </Grid>
         </>
     );
 };

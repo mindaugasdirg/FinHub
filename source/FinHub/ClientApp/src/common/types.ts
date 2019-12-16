@@ -24,6 +24,11 @@ export interface RegistrationFields {
     password: string;
 }
 
+export interface UserUpdateFields {
+    userName: string;
+    email: string;
+}
+
 export interface LoginFields {
     username: string;
     password: string;
@@ -99,4 +104,10 @@ export interface UserAmountStat {
     id: number;
     user: User;
     amount: number;
+}
+
+export enum AlertTypes {
+    Info = "info",
+    Success = "success",
+    Error = "error",
 }

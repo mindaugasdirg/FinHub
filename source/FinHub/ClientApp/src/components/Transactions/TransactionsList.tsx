@@ -5,7 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import { map } from "lodash/fp";
+import { map, compose } from "lodash/fp";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { TransactionsApi } from "../../apis/TransactionsApi";
@@ -13,6 +13,8 @@ import { UsersApi } from "../../apis/UsersApi";
 import { Transaction } from "../../common/types";
 import { RootState } from "../../store/reducers/reducer";
 import { TransactionsListItem } from "./TransactionsListItem";
+import { TransactionsButtons } from "./TransactionButtons";
+import { TransactionView } from "./TransactionView";
 
 const mapStateToProps = (state: RootState) => ({
     activeGroup: state.groups.activeGroup,
@@ -22,6 +24,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const TransactionsList = (props: ConnectedProps<typeof connectedProps>) => {
     const [transactions, setTransactions] = React.useState<Transaction[]>([]);
+    const [modalTransaction, setModalTransaction] = React.useState<Transaction | undefined>();
+    const [modal, setModal] = React.useState(false);
 
     React.useEffect(() => {
         TransactionsApi.getList(props.token, props.activeGroup!.id).then(async loaded => {
@@ -37,28 +41,35 @@ const TransactionsList = (props: ConnectedProps<typeof connectedProps>) => {
         });
     }, [props.activeGroup, props.token]);
 
+    const setModalState = (state: boolean) => () => setModal(state);
+
     return (
-        <Paper>
-            {props.groups.length ?
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Amount</TableCell>
-                            <TableCell>Category</TableCell>
-                            <TableCell>Member</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {transactions.map(transaction =>
-                            <TransactionsListItem
-                                key={transaction.id}
-                                transaction={transaction}
-                            />)}
-                    </TableBody>
-                </Table> :
-                <Typography variant="h4">No Transactions</Typography>
-            }
-        </Paper>
+        <>
+            <TransactionsButtons />
+            <Paper>
+                {props.groups.length ?
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Amount</TableCell>
+                                <TableCell>Category</TableCell>
+                                <TableCell>Member</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {transactions.map(transaction =>
+                                <TransactionsListItem
+                                    key={transaction.id}
+                                    transaction={transaction}
+                                    openModal={compose(setModalState(true), () => setModalTransaction(transaction))}
+                                />)}
+                        </TableBody>
+                    </Table> :
+                    <Typography variant="h4">No Transactions</Typography>
+                }
+            </Paper>
+            {modalTransaction && <TransactionView open={modal} onClose={setModalState(false)} transaction={modalTransaction}/>}
+        </>
     );
 };
 

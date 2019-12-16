@@ -7,16 +7,19 @@ const theme = createMuiTheme({
         },
         primary: {
             contrastText: "#ffffff",
-            dark: "#003156",
+            dark: "#595070",
             light: "#6187b3",
             main: "#305a83",
         },
         secondary: {
-            contrastText: "#000000",
+            contrastText: "#ffffff",
             dark: "#0077ac",
             light: "#72d7ff",
-            main: "#31a6de",
+            main: "#328AC6",
         },
+    },
+    shape: {
+        borderRadius: 8,
     },
 });
 

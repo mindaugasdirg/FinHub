@@ -1,26 +1,28 @@
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { compose } from "lodash/fp";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
 import { login } from "../../actions/UserActions";
 import { preventDefault, useFormField } from "../../common/utils";
-
-interface Props {
-    onSignUp: () => void;
-}
+import { AlertsReducerActions } from "../../store/reducers/alerts/AlertsReducerActions";
+import { useFormStyle } from "../../theme/formStyles";
 
 const mapDispatchToProps = {
     onLogin: login,
+    addAlert: AlertsReducerActions.addAlert,
 };
 
-const Login = (props: Props & ConnectedProps<typeof connectedProps>) => {
-    const [username, setUsername] = useFormField();
-    const [password, setPassword] = useFormField();
+const Login = (props: ConnectedProps<typeof connectedProps>) => {
+    const [username, setUsername] = useFormField("");
+    const [password, setPassword] = useFormField("");
+    const classes = useFormStyle();
 
     const onSubmit = () => {
         if (!username || !password) return;
@@ -28,14 +30,14 @@ const Login = (props: Props & ConnectedProps<typeof connectedProps>) => {
     };
 
     return (
-        <Paper>
-            <Avatar>
+        <>
+            <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h1">
                 Log in
             </Typography>
-            <form onSubmit={compose(onSubmit, preventDefault)}>
+            <form className={classes.form} onSubmit={compose(onSubmit, preventDefault)}>
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -58,10 +60,16 @@ const Login = (props: Props & ConnectedProps<typeof connectedProps>) => {
                     value={password}
                     onChange={setPassword}
                 />
-                <Button fullWidth type="submit" color="primary" variant="contained">Login</Button>
-                <Button onClick={props.onSignUp}>Sign up</Button>
+                <Button fullWidth type="submit" color="primary" variant="contained" className={classes.submit}>Login</Button>
+                <Grid container direction="row" justify="flex-end" className={classes.link}>
+                    <Grid item >
+                        <Link component={RouterLink} to="/signup">
+                            New member? Sign up
+                        </Link>
+                    </Grid>
+                </Grid>
             </form>
-        </Paper>
+        </>
     );
 };
 
