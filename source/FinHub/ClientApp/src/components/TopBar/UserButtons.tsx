@@ -25,8 +25,8 @@ export function UserButtons(props: Props) {
                     <AccountCircle />
                 </IconButton>
                 <Menu anchorEl={ref.current} open={open} onClose={onClick(false)}>
-                    <MenuItem className={classes.white} component={Link} to="/profile">Profile</MenuItem>
-                    <MenuItem className={classes.white} onClick={props.onLogout}>Logout</MenuItem>
+                    <MenuItem component={Link} to="/profile">Profile</MenuItem>
+                    <MenuItem onClick={props.onLogout}>Logout</MenuItem>
                 </Menu>
             </div>
         </ClickAwayListener>
