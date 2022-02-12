@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/reactstrap": "^8.2.0",
-    "ajv": "^6.0.0",
+    "ajv": "^6.12.3",
     "cross-env": "^5.2.0",
     "redux-devtools-extension": "^2.13.8",
     "tslint": "^5.20.1",
